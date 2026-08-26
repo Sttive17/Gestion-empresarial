@@ -1,75 +1,71 @@
-# Entorno de Desarrollo - Software de Gestión Empresarial
+# Proyecto: Software de Gestión Empresarial
 
-Este repositorio contiene la configuración base del entorno de desarrollo usando **Docker**. 
-Con solo unos comandos se tendrá un servidor web (PHP 8.2), una base de datos (MariaDB) y phpMyAdmin funcionando en la máquina local, sin necesidad de instalar XAMPP ni WAMP.
+¡Hola! Este es el repositorio para el proyecto de la clase de **Software de Gestión Empresarial**. 
+
+Aquí estamos montando todo nuestro entorno de desarrollo usando **Docker**. La idea es que con unos poquitos comandos ya tengamos corriendo PHP, MariaDB y phpMyAdmin en nuestra compu local, sin tener que pelear instalando XAMPP o WAMP.
 
 ---
 
-## Requisitos previos
+## ¿Qué necesitamos para empezar?
 
-1. **Docker Desktop** (con el backend de WSL2 activado si usa Windows).  
+1. **Docker Desktop** (si usas Windows, asegúrate de tener el backend de WSL2 activado).  
    [Descargar Docker Desktop](https://www.docker.com/products/docker-desktop/)
-2. **Git** (para clonar el repositorio).
-3. **Visual Studio Code** (recomendado) con la extensión "Remote - Containers" o "Dev Containers" (opcional).
+2. **Git** (obvio, para clonar este repo).
+3. **Visual Studio Code** (recomendadísimo) o tu editor de código favorito.
 
 ---
 
-## Paso a paso para levantar el entorno
+## Pasos para levantar el entorno
 
 ### 1. Clonar el repositorio
-Abrir la terminal (WSL2 / PowerShell / Bash) y ejecuta:
+Abrimos nuestra terminal (WSL2, PowerShell o Bash) y corremos esto:
 ```bash
 git clone https://github.com/jamescanos/SoftwareGestionEmpresarial.git
-cd entorno-sge
+cd SoftwareGestionEmpresarial
 ```
 
 ### 2. Estructura Inicial
-Dentro de la carpeta, crea una carpeta llamada src
+Si no está creada, armamos una carpeta llamada `src` que es donde va a vivir nuestro código:
 ```bash
 mkdir src
 ```
 
 ### 3. Levantar los contenedores
-Ejecutar el siguiente comando en la raíz del proyecto (donde está el docker-compose.yml):
+En la raíz del proyecto (donde está el archivo `docker-compose.yml`), corremos este comando mágico:
 ```bash
 docker-compose up -d
 ```
+*(El `-d` es para que corra de fondo y nos deje seguir usando la consola).*
 
-El flag -d significa "detached" (corre en segundo plano). Si se desean ver los logs en vivo, se quita el -d.
+### 4. Verificar que todo funcione
+- **PHP/Apache:** Entramos al navegador a `http://localhost:8080`. Ahí deberíamos ver la info de PHP (`phpinfo()`).
+- **phpMyAdmin:** Entramos a `http://localhost:8081`. 
+  - **Usuario:** `root`
+  - **Contraseña:** `root_password`
 
-### 4. Verificar que todo funciona
-PHP/Apache: Abrir el navegador y acceder a http://localhost:8080. 
-```
-Se debe ver página de información de PHP (phpinfo()).
-```
-
-phpMyAdmin: Acceder a http://localhost:8081. 
-```
-Usuario: root, Contraseña: root_password.
-```
-
-Base de datos: conectarse desde phpMyAdmin o desde su código PHP usando:
-
-```
-   Host: db (el nombre del servicio en el compose)
-   Usuario: root (o dev_user)
-   Contraseña: root_password (o dev_password)
-   Base de datos: seminario_db
+Para conectarnos a la base de datos desde el código, usamos estos datos:
+```text
+Host: db
+Usuario: root (o dev_user)
+Contraseña: root_password (o dev_password)
+Base de datos: seminario_db
 ```
 
 ---
 
-## Instalación de Laravel
+## Actividad Clase 2: Instalación de Laravel
 
-Como parte de las actividades de la Clase 2, el framework Laravel ha sido instalado en la carpeta `sge`.
+Como parte de la entrega de la **Clase 2**, instalamos el framework Laravel dentro de la carpeta `sge`. ¡Así lo hicimos!:
 
-1. Se utilizó **Composer** a través de WSL2 para descargar el framework.
-2. El comando utilizado fue:
+1. Usamos **Composer** desde la terminal (WSL2) para descargar todo el framework.
+2. El comando que ejecutamos fue:
    ```bash
    composer create-project laravel/laravel sge
    ```
-3. Las dependencias ubicadas en `vendor/` y el archivo de configuración `.env` han sido excluidos del control de versiones mediante el archivo `.gitignore`.
-4. El servidor de desarrollo se levanta con:
+3. Las dependencias pesadas de la carpeta `vendor/` y nuestro archivo `.env` ya están en el `.gitignore` para no subir basura ni datos sensibles al repositorio.
+4. Y para levantar el servidor de pruebas de Laravel, solo hay que entrar a la carpeta y correr:
    ```bash
+   cd sge
    php artisan serve
    ```
+   *(Esto nos levanta la web en `http://127.0.0.1:8000`)*.
