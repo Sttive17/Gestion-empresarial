@@ -56,3 +56,20 @@ Base de datos: conectarse desde phpMyAdmin o desde su código PHP usando:
    Contraseña: root_password (o dev_password)
    Base de datos: seminario_db
 ```
+
+---
+
+## Instalación de Laravel
+
+Como parte de las actividades de la Clase 2, el framework Laravel ha sido instalado en la carpeta `sge`.
+
+1. Se utilizó **Composer** a través de WSL2 para descargar el framework.
+2. El comando utilizado fue:
+   ```bash
+   composer create-project laravel/laravel sge
+   ```
+3. Las dependencias ubicadas en `vendor/` y el archivo de configuración `.env` han sido excluidos del control de versiones mediante el archivo `.gitignore`.
+4. El servidor de desarrollo se levanta con:
+   ```bash
+   php artisan serve
+   ```
