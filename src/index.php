@@ -1,4 +1,5 @@
 <?php
+phpinfo();
 // PHP Information
 $phpVersion = phpversion();
 $serverSoftware = $_SERVER['SERVER_SOFTWARE'] ?? 'Unknown';
