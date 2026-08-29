@@ -1,123 +1,101 @@
 # Software de Gestión Empresarial
 
-Repositorio del proyecto para la asignatura Software de Gestión Empresarial - Cotecnova 2026.
+Proyecto de la asignatura Software de Gestión Empresarial - Cotecnova 2026.
 
-## Requisitos previos
+---
 
-1. Docker Desktop (con WSL2 activado en Windows).
-2. Git.
-3. Visual Studio Code.
+## Requisitos
 
-## Levantar el entorno Docker (Clase 1)
+- Docker Desktop con WSL2 activado
+- Git
+- Visual Studio Code
 
-1. Clonar el repositorio:
+---
+
+## Clase 1 - Entorno con Docker
+
+Clona el repositorio y levanta los contenedores:
+
 ```bash
 git clone https://github.com/jamescanos/SoftwareGestionEmpresarial.git
 cd SoftwareGestionEmpresarial
-```
-
-2. Crear la carpeta src si no existe:
-```bash
-mkdir src
-```
-
-3. Ejecutar los contenedores:
-```bash
 docker-compose up -d
 ```
 
-4. Accesos:
-- Apache/PHP: http://localhost:8080
-- phpMyAdmin: http://localhost:8081 (Usuario: root / Clave: root_password)
-
-Credenciales de la base de datos:
-- Host: db
-- Usuario: root (o dev_user)
-- Contraseña: root_password (o dev_password)
-- Base de datos: seminario_db
+Accesos:
+- PHP/Apache: http://localhost:8080
+- phpMyAdmin: http://localhost:8081 — usuario: `root`, contraseña: `root_password`
+- Base de datos: host `db`, BD `seminario_db`
 
 ---
 
 ## Clase 2 - Instalación de Laravel
 
-Se instaló el framework Laravel en la carpeta `sge` usando Composer desde WSL2:
+Se creó el proyecto Laravel en la carpeta `sge`:
 
 ```bash
 composer create-project laravel/laravel sge
 ```
 
-La carpeta `vendor/` y el archivo `.env` no se suben al repositorio, están en el `.gitignore`.
+Para correr el servidor:
 
-Para correr el servidor de desarrollo:
 ```bash
 cd sge
 php artisan serve
 ```
 
-El proyecto queda disponible en http://127.0.0.1:8000.
+Disponible en http://127.0.0.1:8000.
+
+> `vendor/` y `.env` están en `.gitignore` y no se suben al repositorio.
 
 ---
 
-## Clase 3 - Base de datos, variables de entorno y primera modificación
+## Clase 3 - Base de datos y primera modificación
 
-### Variables de entorno (.env)
+### Archivo .env
 
-El archivo `.env` tiene la configuración del proyecto según el entorno. Las más importantes:
+Contiene las variables de configuración del proyecto. No se sube al repositorio.
 
-| Variable | Descripción | Valor |
-|---|---|---|
-| APP_NAME | Nombre de la app | Laravel |
-| APP_ENV | Entorno de ejecución | local |
-| APP_DEBUG | Modo depuración | true |
-| APP_URL | URL de la app | http://localhost:8000 |
-| DB_CONNECTION | Motor de base de datos | sqlite |
-| SESSION_DRIVER | Driver de sesiones | database |
+| Variable | Valor |
+|---|---|
+| APP_ENV | local |
+| APP_DEBUG | true |
+| APP_URL | http://localhost:8000 |
+| DB_CONNECTION | sqlite |
+| SESSION_DRIVER | database |
 
-El `.env` no se sube al repositorio porque tiene datos sensibles.
-
-### Estructura de carpetas
+### Estructura del proyecto
 
 ```
 sge/
-├── app/              # Modelos, Controladores, lógica
-├── bootstrap/        # Arranque del framework
-├── config/           # Configuraciones
-├── database/         # Migraciones y seeders
-├── public/           # index.php, punto de entrada
-├── resources/        # Vistas Blade, CSS, JS
-│   └── views/
-│       └── welcome.blade.php   ← modificada en clase 3
-├── routes/           # Rutas de la aplicación
-├── storage/          # Logs, caché, archivos generados
-├── tests/            # Pruebas automatizadas
-├── artisan           # CLI de Laravel
-└── composer.json     # Dependencias del proyecto
+├── app/          → lógica, modelos y controladores
+├── config/       → configuraciones
+├── database/     → migraciones
+├── public/       → punto de entrada (index.php)
+├── resources/    → vistas Blade, CSS, JS
+├── routes/       → rutas de la aplicación
+├── storage/      → logs y caché
+└── tests/        → pruebas
 ```
 
-### Flujo de una petición HTTP en Laravel
+### Flujo de una petición
 
 ```
-Navegador → public/index.php → Kernel → Router (routes/web.php)
-         → Controller → Model → Base de datos
-         → View (Blade) → Respuesta HTML → Navegador
+Navegador → index.php → Router → Controller → Model → BD
+                                                     ↓
+                                              View (Blade) → Respuesta
 ```
 
-### Migraciones
+### Migraciones ejecutadas
 
-Se ejecutaron las migraciones con:
 ```bash
 php artisan migrate
 ```
 
-Tablas creadas en la base de datos (SQLite):
-- `users`
-- `password_reset_tokens`
-- `sessions`
-- `cache`
-- `jobs`
+Tablas creadas: `users`, `sessions`, `cache`, `jobs`, `password_reset_tokens`
 
-### Modificación de la vista welcome
+### Vista modificada
 
-Se editó `resources/views/welcome.blade.php` cambiando:
-- Título de la pestaña: `Bienvenidos al Seminario Laravel`
-- Encabezado principal: `Este es nuestro primer proyecto con Laravel`
+Se editó `resources/views/welcome.blade.php`:
+- Título: `Bienvenidos al Seminario Laravel`
+- Encabezado: `Este es nuestro primer proyecto con Laravel`
