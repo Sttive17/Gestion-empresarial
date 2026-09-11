@@ -12,6 +12,19 @@ class Product extends Model
         'name', 'description', 'price', 'active'
     ];
 
+    protected static function booted()
+    {
+        static::creating(function ($product) {
+            if (empty($product->codigo)) {
+                $maxId = static::max('id') ?? 0;
+                $product->codigo = 'PROD-' . str_pad($maxId + 1, 3, '0', STR_PAD_LEFT);
+            }
+            if (empty($product->estado)) {
+                $product->estado = 'Activo';
+            }
+        });
+    }
+
     public function getNameAttribute()
     {
         return $this->nombre;
