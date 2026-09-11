@@ -8,6 +8,15 @@ class Category extends Model
 {
     protected $fillable = ['nombre', 'descripcion', 'name', 'description', 'active'];
 
+    protected static function booted()
+    {
+        static::creating(function ($category) {
+            if (empty($category->nombre)) {
+                $category->nombre = 'Nueva Categoría';
+            }
+        });
+    }
+
     public function getNameAttribute()
     {
         return $this->nombre;

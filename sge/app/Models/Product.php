@@ -22,6 +22,18 @@ class Product extends Model
             if (empty($product->estado)) {
                 $product->estado = 'Activo';
             }
+            if (empty($product->category_id)) {
+                $defaultCategory = \App\Models\Category::first();
+                if ($defaultCategory) {
+                    $product->category_id = $defaultCategory->id;
+                }
+            }
+            if (!isset($product->precio)) {
+                $product->precio = 0;
+            }
+            if (!isset($product->stock)) {
+                $product->stock = 0;
+            }
         });
     }
 
